@@ -16,29 +16,16 @@ const page = () => {
       return;
     }
 
+    const lowerCaseName = name.toLowerCase();
+    setName(lowerCaseName);
+
     try {
-      const resUserExists = await fetch("/api/auth/userExists", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const { user } = await resUserExists.json();
-
-      if (user) {
-        console.log("user already exists");
-        setError("User already exists");
-        return;
-      }
-
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name: lowerCaseName, email, password }),
       });
 
       const data = await res.json();

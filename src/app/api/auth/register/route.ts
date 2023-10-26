@@ -7,11 +7,27 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     const { name, email, password, image } = data;
+    await connectMongoDB();
 
-    console.log(name, email, password, image);
+    const emailExist = await User.findOne({ email }).select("_id");
+    const userName = name.toLowerCase();
+    console.log(userName);
+
+    const userNameExist = await User.findOne({ name: userName }).select("_id");
+
+    if (emailExist) {
+      return NextResponse.json(
+        { message: "Email already exist" },
+        { status: 400 }
+      );
+    } else if (userNameExist) {
+      return NextResponse.json(
+        { message: "Username already exist" },
+        { status: 400 }
+      );
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await connectMongoDB();
     await User.create({ name, email, password: hashedPassword });
 
     console.log(name, email, hashedPassword);
