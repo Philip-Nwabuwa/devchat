@@ -1,75 +1,12 @@
-"use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-const page = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import RegisterForm from "@/app/components/RegisterForm";
+import { getServerSession } from "next-auth";
+import React from "react";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!name || !email || !password) {
-      setError("Please fill all the fields");
-      return;
-    }
-
-    const lowerCaseName = name.toLowerCase();
-    setName(lowerCaseName);
-
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: lowerCaseName, email, password }),
-      });
-
-      const data = await res.json();
-      console.log(data);
-      if (res.ok) {
-        const form = e.target as HTMLFormElement;
-        form.reset();
-        router.push("/login");
-      } else {
-        setError(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const page = async () => {
   return (
-    <div className="mt-6">
-      <h2>Register with email and password</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="name"
-        />
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="email"
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="password"
-        />
-        <button>Login</button>
-        {error && <div className="bg-red-400 mt-3">{error}</div>}
-      </form>
-      <div>
-        already have an account{" "}
-        <Link href="/login" className="hover:underline">
-          Login
-        </Link>
-      </div>
+    <div>
+      <RegisterForm />
     </div>
   );
 };

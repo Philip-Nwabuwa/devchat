@@ -6,7 +6,14 @@ import Logout from "../components/Logout";
 const page = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   return (
     <div>
@@ -17,6 +24,8 @@ const page = async () => {
         height={100}
       />
       <p>Signed in as {session?.user?.email}</p>
+
+      <p>{session.user?.name}</p>
 
       <Logout />
     </div>

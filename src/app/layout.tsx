@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "@uploadthing/react/styles.css";
 import NextAuthProvider from "./Providers/NextAuthProvider";
 import TanstackProvider from "./Providers/TanstackProvider";
+// import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+// import { extractRouterConfig } from "uploadthing/server";
+
+// import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <TanstackProvider>{children}</TanstackProvider>
+          <TanstackProvider>
+            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          </TanstackProvider>
         </NextAuthProvider>
       </body>
     </html>

@@ -10,6 +10,10 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  if (session) {
+    router.push("/dashboard");
+  }
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +31,7 @@ export default function Home() {
         return;
       }
 
-      router.replace("/dashboard");
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }

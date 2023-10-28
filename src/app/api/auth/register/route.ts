@@ -9,6 +9,8 @@ export async function POST(req: NextRequest) {
     const { name, email, password, image } = data;
     await connectMongoDB();
 
+    console.log(name, email, password, image);
+
     const emailExist = await User.findOne({ email }).select("_id");
     const userName = name.toLowerCase();
     console.log(userName);
@@ -28,9 +30,9 @@ export async function POST(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hashedPassword });
+    await User.create({ name, email, password: hashedPassword, image });
 
-    console.log(name, email, hashedPassword);
+    console.log(name, email, hashedPassword, image);
 
     return NextResponse.json({ message: "User Registered" }, { status: 201 });
   } catch (error) {
