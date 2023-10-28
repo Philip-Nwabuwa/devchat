@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "@uploadthing/react/styles.css";
 import NextAuthProvider from "./Providers/NextAuthProvider";
 import TanstackProvider from "./Providers/TanstackProvider";
-// import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-// import { extractRouterConfig } from "uploadthing/server";
 
-// import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
