@@ -3,9 +3,35 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      if (res?.error) {
+        setError("Invalid credentials");
+        return;
+      }
+
+      router.replace("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section>
@@ -28,12 +54,20 @@ export default function Home() {
       )}
       <div className="mt-6">
         <h2>Login with email and password</h2>
-        <form>
-          <input type="text" placeholder="email" />
-          <input type="password" placeholder="password" />
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="email"
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="password"
+          />
           <button>Login</button>
 
-          <div className="bg-red-400 mt-3">error </div>
+          {error && <div className="text-red-500">{error}</div>}
         </form>
         <div>
           don't have an account yet?{" "}

@@ -66,7 +66,7 @@ const page = () => {
       </form>
       <div>
         already have an account{" "}
-        <Link href="/" className="hover:underline">
+        <Link href="/login" className="hover:underline">
           Login
         </Link>
       </div>
