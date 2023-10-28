@@ -3,13 +3,13 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   const { data: session } = useSession();
   if (session) {
     return (
       <div>
         <h1>Hi {session.user?.name}</h1>
-        <p>Here's your email: {session?.user?.email}</p>
+        <p>Heres your email: {session?.user?.email}</p>
         wish to countinue? <Link href="/dashboard">Dashboard</Link>
       </div>
     );
@@ -17,4 +17,4 @@ const page = () => {
   return <div>page</div>;
 };
 
-export default page;
+export default Page;

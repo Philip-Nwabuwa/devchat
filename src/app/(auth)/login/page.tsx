@@ -74,7 +74,7 @@ export default function Home() {
           {error && <div className="text-red-500">{error}</div>}
         </form>
         <div>
-          don't have an account yet?{" "}
+          dont have an account yet?{" "}
           <Link href="/register" className="hover:underline">
             Register
           </Link>
