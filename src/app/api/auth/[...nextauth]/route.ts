@@ -51,7 +51,7 @@ export const authOptions = {
           await connectMongoDB();
           const userExists = await User.findOne({ email });
           if (!userExists) {
-            const data = await fetch("http://localhost:3000/api/user", {
+            const data = await fetch("/api/user", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
