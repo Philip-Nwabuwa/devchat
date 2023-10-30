@@ -51,14 +51,14 @@ export const authOptions = {
           await connectMongoDB();
           const userExists = await User.findOne({ email });
           if (!userExists) {
-            const data = await fetch("/api/user", {
+            console.log("User does not exist");
+            console.log(name, email, image);
+            
+            const url = `${process.env.NEXTAUTH_URL}api/auth/user`;
+            const data = await fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name,
-                email,
-                image,
-              }),
+              body: JSON.stringify({ name, email, image }),
             });
 
             if (data.ok) {

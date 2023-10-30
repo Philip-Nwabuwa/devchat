@@ -137,9 +137,9 @@ const RegisterForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormItem>
-          <div onClick={handleAvatarClick}>
+          <div className="cursor-pointer" onClick={handleAvatarClick}>
             <Input
-              className="cursor-pointer"
+              
               type="file"
               onChange={handleImageChange}
               ref={inputRef}

@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
+  console.log(data);
+  
   const { name, email, image } = data;
 
   if (!name || !email) {
