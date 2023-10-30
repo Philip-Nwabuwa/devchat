@@ -23,6 +23,7 @@ import { Camera } from "lucide-react";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const formSchema = z
   .object({
@@ -49,6 +50,13 @@ const RegisterForm = () => {
   const { toast } = useToast();
   const { edgestore } = useEdgeStore();
   const router = useRouter();
+
+  const Session = useSession();
+
+
+  if (Session?.data) {
+    router.push("/dashboard");
+  }
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { data, isError, mutateAsync } = useMutation({
@@ -62,7 +70,6 @@ const RegisterForm = () => {
         description: err.message,
       });
     },
-    onSettled: () => {},
   });
 
   const handleAvatarClick = () => {
@@ -116,7 +123,7 @@ const RegisterForm = () => {
 
       setTimeout(() => {
         router.push("/login");
-      }, 3000);
+      }, 2000);
     } catch (error: any) {
       const errorMessage = error?.message || error?.response?.message;
       toast({

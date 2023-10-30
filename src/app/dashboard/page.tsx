@@ -1,31 +1,31 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import Image from "next/image";
 import Logout from "../components/Logout";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { FileImage } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
+  const user = session?.user;
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+  if (session?.user?.email) {
+    redirect("/dashboard");
   }
 
   return (
     <div>
-      <Image
-        src={session?.user?.image!}
-        alt="user profile image"
-        width={100}
-        height={100}
-      />
-      <p>Signed in as {session?.user?.email}</p>
+      <Avatar>
+        {user?.image && (
+          <AvatarImage src={user.image} alt="Preview" />
+        )}
+        <AvatarFallback>
+          <FileImage />
+        </AvatarFallback>
+      </Avatar>
+      <p>Signed in as {user?.email}</p>
 
-      <p>{session.user?.name}</p>
+      <p>{user?.name}</p>
 
       <Logout />
     </div>
