@@ -5,6 +5,7 @@ import NextAuthProvider from "./Providers/NextAuthProvider";
 import TanstackProvider from "./Providers/TanstackProvider";
 
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { Toaster } from "./components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <TanstackProvider>
             <EdgeStoreProvider>{children}</EdgeStoreProvider>
           </TanstackProvider>
+          <Toaster />
         </NextAuthProvider>
       </body>
     </html>
