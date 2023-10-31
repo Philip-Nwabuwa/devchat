@@ -186,7 +186,7 @@ const LoginForm = () => {
         <h1 className="text-5xl mb-4 text-center">Welcome back!</h1>
         <div className="w-full flex justify-center items-center">
           <p className="max-w-[500px] text-center">
-            login to your account to continue using our services. If you don't
+            login to your account to continue using our services. If you dont
             have an account, you can register for free.
           </p>
         </div>
